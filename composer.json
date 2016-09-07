@@ -1,0 +1,20 @@
+{
+	"name": "fab/oai-server",
+	"type": "typo3-cms-extension",
+	"description": "OAI server to fetch data in a flexible way. Possible output format: JSON, Atom, HTML. The OAI server is meant for retrieving data only.",
+	"homepage": "https://github.com/fabarea/oai_server",
+	"license": ["GPL-2.0+"],
+	"keywords": ["TYPO3 CMS", "OAI server"],
+	"support": {
+		"issues": "https://github.com/fabarea/oai_server/issues"
+	},
+	"autoload": {
+		"psr-4": {
+			"Fab\\OaiServer\\": "Classes/"
+		}
+	},
+	"replace": {
+		"oai_server": "self.version",
+		"typo3-ter/oai-server": "self.version"
+	}
+}

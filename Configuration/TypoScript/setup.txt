@@ -1,0 +1,33 @@
+# Plugin configuration
+plugin.tx_oaiserver {
+    persistence {
+        storagePid = {$plugin.tx_oaiserver.persistence.storagePid}
+    }
+
+    view {
+        templateRootPath = {$plugin.tx_oaiserver.view.templateRootPath}
+        partialRootPath = {$plugin.tx_oaiserver.view.partialRootPath}
+        layoutRootPath = {$plugin.tx_oaiserver.view.layoutRootPath}
+    }
+}
+
+plugin.tx_oaiserver {
+    settings {
+
+        # Tell the maximum items taken by default for the list.
+        limit = 50
+
+        # Optional default filters (not yet implemented)
+        filter =
+
+        # Protect the output with a token or a user session
+        permissions {
+
+            # Possible comma separated list of Frontend User group.
+            frontendUserGroups = *
+
+            # Give a general uuid token to protect this data stream
+            #token = 3ce2b796-69cd-11e6-8b77-86f30ca893d3
+        }
+    }
+}

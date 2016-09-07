@@ -1,0 +1,15 @@
+
+plugin.tx_oaiserver {
+	view {
+		# cat=plugin.tx_oaiserver/file; type=string; label=Path to template root (BE)
+		templateRootPath = EXT:oai_server/Resources/Private/Templates/
+		# cat=plugin.tx_oaiserver/file; type=string; label=Path to template partials (BE)
+		partialRootPath = EXT:oai_server/Resources/Private/Partials/
+		# cat=plugin.tx_oaiserver/file; type=string; label=Path to template layouts (BE)
+		layoutRootPath = EXT:oai_server/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_oaiserver//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
