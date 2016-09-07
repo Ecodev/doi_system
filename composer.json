@@ -1,7 +1,7 @@
 {
 	"name": "fab/oai-server",
 	"type": "typo3-cms-extension",
-	"description": "OAI server to fetch data in a flexible way. Possible output format: JSON, Atom, HTML. The OAI server is meant for retrieving data only.",
+	"description": "OAI server emulation. OAI stands for Open Archives Initiative, a protocol for Metadata Harvesting.",
 	"homepage": "https://github.com/fabarea/oai_server",
 	"license": ["GPL-2.0+"],
 	"keywords": ["TYPO3 CMS", "OAI server"],

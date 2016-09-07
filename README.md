@@ -1,10 +1,9 @@
 OAI server for TYPO3 CMS
 =========================
 
-This is an extension for TYPO3 CMS aiming to query data in a flexible way.
+This is a TYPO3 CMS extension emulating an OAI server. OAI stands for Open Archives Initiative, a protocol for Metadata Harvesting.
 
 The URLs given as example are encoded.
-
 
 	# Return all document
 	http://domain.tld/oai/
@@ -13,7 +12,6 @@ The URLs given as example are encoded.
 Under the hood, the URL is decoded and corresponds to something like::
 
 	http://domain.tld/index.php?eID=oai_server&route=users/1;
-
 
 
 Configuration
