@@ -12,7 +12,7 @@
 			<record>
 				<header>
 					<identifier>10.18753/2297-8224-{file.uid}</identifier>
-					<datestamp>[sys_file_metadata:tsstamp] in YYYY-MM-DD format</datestamp>
+					<datestamp><f:format.date format="Y-m-d">{file.metadata.tstamp}</f:format.date></datestamp>
 				</header>
 				<metadata>
 					<oai_dc:dc
@@ -23,33 +23,27 @@
 							xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
 				http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
 
-
 						<f:comment><!-- mandatory tags --></f:comment>
-						<dc:identifier>10.18753/2297-8224-[sys_file_metadata:year]-[sys_file_metadata:uid]
-						</dc:identifier>
-						<dc:identifier>http://www.sozialpolitik.ch/article/content/480/show/[sys_file_metadata:uid]/
-						</dc:identifier>
-						[for each [sys_file_metadata:creator]] (use ; as separator for loop)
-						<dc:creator>Lastname1, Firstname1</dc:creator>
-						<dc:creator>Lastname2, Firstname2</dc:creator>
-						[end for]
-						<dc:title>[sys_file_metadata:title]</dc:title>
-						<dc:publisher>sozialpolitik.ch</dc:publisher>
-						<dc:date>[sys_file_metadata:year]</dc:date>
+						<dc:identifier>{defaults.doiPrefix}/{defaults.doiSuffix}-{file.uid}</dc:identifier>
+						<dc:identifier>{defaults.urlIdentifier}{file.uid}/</dc:identifier>
+						<doi:tag.creators/>
+						<dc:title>{file.metadata.title}</dc:title>
+						<dc:publisher>{defaults.publisher}</dc:publisher>
+						<dc:date>{file.metadata.year}</dc:date>
 						<dc:type>Text</dc:type>
 						<dc:type>Article</dc:type>
 
 						<f:comment><!-- recommended tags --></f:comment>
-						<dc:subject>[sys_file_metadata:keywords]</dc:subject>
-						<dc:contributor>sozialpolitik.ch</dc:contributor>
+						<dc:subject><doi:content.subject/></dc:subject>
+						<dc:contributor>{defaults.contributor}</dc:contributor>
 
 						<f:comment><!-- optional tags --></f:comment>
-						<dc:language>[sys_file_metadata:language]</dc:language>
+						<dc:language>{file.metadata.language}</dc:language>
 						<dc:format>PDF</dc:format>
 
 						<f:comment><!-- recommended tag but define rights (optional) for use of description --></f:comment>
-						<dc:rights>xxx</dc:rights>
-						<dc:description>[sys_file_metadata:description]</dc:description>
+						<dc:rights>{defaults.copyright}</dc:rights>
+						<dc:description>{file.metadata.description}</dc:description>
 
 					</oai_dc:dc>
 				</metadata>

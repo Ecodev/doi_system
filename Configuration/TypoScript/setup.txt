@@ -25,9 +25,12 @@ plugin.tx_doisystem {
         }
 
         defaults {
-            publisher = sozialpolitik.ch
             doiPrefix = 10.18753
-            doiSuffix = 2297-8224-
+            doiSuffix = 2297-8224
+            urlIdentifier = http://www.sozialpolitik.ch/article/content/480/show/
+            publisher = sozialpolitik.ch
+            contributor = sozialpolitik.ch
+            copyright =
         }
 
         # Protect the output with a token or a user session

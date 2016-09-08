@@ -50,6 +50,7 @@ class DoiSystemController extends ActionController
 
         // Assign template variables.
         $this->view->assign('settings', $settings);
+        $this->view->assign('defaults', $this->settings['defaults']);
         $this->view->assign('files', $files);
 
         $fileNameAndPath = 'EXT:doi_system/Resources/Private/Templates/DoiSystem/Output.xml';
@@ -57,7 +58,7 @@ class DoiSystemController extends ActionController
         $this->view->setTemplatePathAndFilename($templatePathAndFilename);
 
         // Send proper header
-        $this->controllerContext->getResponse()->setHeader('Content-Type', 'application/rss+xml');
+        $this->controllerContext->getResponse()->setHeader('Content-Type', 'application/xml');
         $this->controllerContext->getResponse()->sendHeaders();
 
         return $this->view->render();
