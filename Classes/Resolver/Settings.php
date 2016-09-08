@@ -7,19 +7,19 @@ namespace Fab\OaiServer\Resolver;
  * For the full copyright and license information, please read the
  * LICENSE.md file that was distributed with this source code.
  */
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class Settings
  */
 class Settings
 {
-    const MANY = 'many';
-    const ONE = 'one';
+    const LIST_RECORDS = 'ListRecords';
 
     /**
      * @var string
      */
-    protected $contentType = '';
+    protected $contentType = 'sys_file';
 
     /**
      * @var int
@@ -37,11 +37,6 @@ class Settings
     protected $excludedFields = [];
 
     /**
-     * @var string
-     */
-    protected $manyOrOne = '';
-
-    /**
      * @var array
      */
     protected $orderings = [];
@@ -54,7 +49,7 @@ class Settings
     /**
      * @var int
      */
-    protected $limit = 0;
+    protected $limit = 10;
 
     /**
      * @var string
@@ -70,6 +65,11 @@ class Settings
      * @var string
      */
     protected $permissionToken = '';
+
+    /**
+     * @var array
+     */
+    protected $filters = [];
 
     /**
      * @return string
@@ -112,24 +112,6 @@ class Settings
     public function setFields(array $fields)
     {
         $this->fields = $fields;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getManyOrOne()
-    {
-        return $this->manyOrOne;
-    }
-
-    /**
-     * @param string $manyOrOne
-     * @return $this
-     */
-    public function setManyOrOne($manyOrOne)
-    {
-        $this->manyOrOne = $manyOrOne;
         return $this;
     }
 
@@ -248,13 +230,13 @@ class Settings
         return array_pop($routeSegments);
     }
 
-    /**
-     * @return string
-     */
-    public function getFistRouteSegment()
-    {
-        return $this->routeSegments[0];
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getFistRouteSegment()
+//    {
+//        return $this->routeSegments[0];
+//    }
 
     /**
      * @return array
@@ -291,5 +273,39 @@ class Settings
         $this->permissionToken = $permissionToken;
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getFilters()
+    {
+        $fromDate = $this->getArgument('from');
+        if ($fromDate) {
+            $fromTimeStamp = strtotime($fromDate);
+            $this->filters[] = 'metadata.tstamp > ' . $fromTimeStamp;
+        }
+        return $this->filters;
+    }
+
+    /**
+     * @param array $filters
+     * @return $this
+     */
+    public function setFilters($filters)
+    {
+        $this->filters = $filters;
+        return $this;
+    }
+
+    /**
+     * @param string $argumentName
+     * @return string
+     */
+    public function getArgument($argumentName)
+    {
+        $argumentValue = GeneralUtility::_GET($argumentName);
+        return (string)$argumentValue;
+    }
+
 
 }

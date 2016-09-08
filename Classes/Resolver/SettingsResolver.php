@@ -26,11 +26,7 @@ class SettingsResolver
      */
     public function __construct(array $settings)
     {
-        if (array_key_exists('mappings', $settings) && is_array($settings['mappings'])) {
-            $this->typoscript = $settings;
-        } else {
-            throw new \RuntimeException('Mapping configuration missing. Make sure the TypoScript settings is correctly loaded for the OAI server', 1472451633);
-        }
+        $this->tsSettings = $settings;
     }
 
     /**
@@ -45,59 +41,62 @@ class SettingsResolver
         $settings = GeneralUtility::makeInstance(Settings::class);
         $settings->setRouteSegments(GeneralUtility::trimExplode('/', $route));
 
-        $aliasDataType = $settings->getFistRouteSegment();
-
-        if (array_key_exists($aliasDataType, $this->typoscript['mappings'])) {
-            $mappings = $this->typoscript['mappings'][$aliasDataType];
-
-            if (array_key_exists('tableName', $mappings)) {
-                $settings->setContentType((string)$mappings['tableName']);
-            }
-
-            if (array_key_exists('excludedFields', $mappings)) {
-                $settings->setExcludedFields(GeneralUtility::trimExplode(',', $mappings['excludedFields'], true));
-            }
-
-            if (array_key_exists('orderings', $mappings) && is_array($mappings['orderings'])) {
-                $settings->setOrderings($mappings['orderings']);
-            }
-
-            if (array_key_exists('limit', $mappings)) {
-                $settings->setLimit((int)$mappings['limit']);
-            }
-
-            if ($settings->countRouteSegments() === 2) {
-                $settings->setManyOrOne(Settings::ONE);
-            } else {
-                $settings->setManyOrOne(Settings::MANY);
-            }
-
-            if (array_key_exists($settings->getManyOrOne(), $mappings) && array_key_exists('fields', $mappings[$settings->getManyOrOne()])) {
-                $fieldList = $mappings[$settings->getManyOrOne()]['fields'];
-                $settings->setFields(GeneralUtility::trimExplode(',', $fieldList, true));
-            }
-
-            if (array_key_exists('permissions', $mappings)) {
-                $permissions = $mappings['permissions'];
-                if (array_key_exists('frontendUserGroups', $permissions)) {
-                    $settings->setPermissionsUserGroups(GeneralUtility::trimExplode(',', $permissions['frontendUserGroups'], true));
-                }
-
-                if (array_key_exists('token', $permissions)) {
-                    $settings->setPermissionToken((string)$permissions['token']);
-                }
-            }
-
-            // Override specific configuration for format output (atom, csv, ...)
-            if (array_key_exists($settings->getFormat(), $this->typoscript)) {
-                $specific = $this->typoscript[$settings->getFormat()];
-
-                if (array_key_exists('limit', $specific)) {
-                    $settings->setLimit((int)$specific['limit']);
-                }
-            }
-
+        if (array_key_exists('filters', $this->tsSettings) && is_array($this->tsSettings['filters'])) {
+            $settings->setFilters($this->tsSettings['filters']);
         }
+
+        if (array_key_exists('permissions', $this->tsSettings)) {
+            $permissions = $this->tsSettings['permissions'];
+            if (array_key_exists('frontendUserGroups', $permissions)) {
+                $settings->setPermissionsUserGroups(GeneralUtility::trimExplode(',', $permissions['frontendUserGroups'], true));
+            }
+
+            if (array_key_exists('token', $permissions)) {
+                $settings->setPermissionToken((string)$permissions['token']);
+            }
+        }
+
+
+//        if (array_key_exists($aliasDataType, $this->typoscript['mappings'])) {
+//            $mappings = $this->typoscript['mappings'][$aliasDataType];
+//
+//            if (array_key_exists('tableName', $mappings)) {
+//                $settings->setContentType((string)$mappings['tableName']);
+//            }
+//
+//            if (array_key_exists('excludedFields', $mappings)) {
+//                $settings->setExcludedFields(GeneralUtility::trimExplode(',', $mappings['excludedFields'], true));
+//            }
+//
+//            if (array_key_exists('orderings', $mappings) && is_array($mappings['orderings'])) {
+//                $settings->setOrderings($mappings['orderings']);
+//            }
+//
+//            if (array_key_exists('limit', $mappings)) {
+//                $settings->setLimit((int)$mappings['limit']);
+//            }
+//
+//            if ($settings->countRouteSegments() === 2) {
+//                $settings->setManyOrOne(Settings::ONE);
+//            } else {
+//                $settings->setManyOrOne(Settings::MANY);
+//            }
+//
+//            if (array_key_exists($settings->getManyOrOne(), $mappings) && array_key_exists('fields', $mappings[$settings->getManyOrOne()])) {
+//                $fieldList = $mappings[$settings->getManyOrOne()]['fields'];
+//                $settings->setFields(GeneralUtility::trimExplode(',', $fieldList, true));
+//            }
+//
+//            // Override specific configuration for format output (atom, csv, ...)
+//            if (array_key_exists($settings->getFormat(), $this->typoscript)) {
+//                $specific = $this->typoscript[$settings->getFormat()];
+//
+//                if (array_key_exists('limit', $specific)) {
+//                    $settings->setLimit((int)$specific['limit']);
+//                }
+//            }
+//
+//        }
 
         return $settings;
     }

@@ -21,12 +21,12 @@ class RoutingController
 {
 
     /**
-     * RoutingController constructor.
+     * @param string $verb
      */
-    public function __construct($route)
+    public function __construct($verb)
     {
         // Tweak, inject parameters
-        $_GET['tx_oaiserver_pi1']['route'] = $route;
+        $_GET['tx_oaiserver_pi1']['verb'] = $verb;
     }
 
     /**
@@ -99,13 +99,13 @@ class RoutingController
 
 }
 
-$output = '404';
-$route = GeneralUtility::_GET('route');
+$output = '404'; // @todo 500
+$verb = GeneralUtility::_GET('verb');
 
-if ($route) {
+if ($verb) {
 
     /** @var RoutingController $routing */
-    $routing = GeneralUtility::makeInstance(RoutingController::class, $route);
+    $routing = GeneralUtility::makeInstance(RoutingController::class, $verb);
 
     try {
         $output = $routing->dispatch();

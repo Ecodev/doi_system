@@ -2,11 +2,11 @@
 	"name": "fab/oai-server",
 	"type": "typo3-cms-extension",
 	"description": "OAI server emulation. OAI stands for Open Archives Initiative, a protocol for Metadata Harvesting.",
-	"homepage": "https://github.com/fabarea/oai_server",
+	"homepage": "https://github.com/Ecodev/oai_server",
 	"license": ["GPL-2.0+"],
 	"keywords": ["TYPO3 CMS", "OAI server"],
 	"support": {
-		"issues": "https://github.com/fabarea/oai_server/issues"
+		"issues": "https://github.com/Ecodev/oai_server/issues"
 	},
 	"autoload": {
 		"psr-4": {

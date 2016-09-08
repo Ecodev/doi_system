@@ -17,7 +17,7 @@ Under the hood, the URL is decoded and corresponds to something like::
 Configuration
 =============
 
-The configuration is done via TypoScript. For a new content type you must register a new key like "users" or "usergroups" as used in the URL `http://domain.tld/content/users`.
+The configuration is done via TypoScript.
 
 
 Installation
@@ -37,4 +37,4 @@ or, if you are using Nginx:
 
     rewrite ^/oai/(.*)$ /index.php?eID=oai_server&route=$1 last;
 
-Now you can start fetching content with ``content/``.
+Now you can start fetching content with ``oai/``.

@@ -25,59 +25,71 @@ class OaiServerController extends ActionController
 {
 
     /**
-     * @param string $route
+     * @param string $verb
      * @return string
-     * @throws \Fab\Vidi\Exception\InvalidKeyInArrayException
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     * @throws \Fab\Vidi\Exception\NotExistingClassException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function outputAction($route)
+    public function outputAction($verb)
     {
 
-        $settings = $this->getSettingsResolver()->resolve($route);
+        $settings = $this->getSettingsResolver()->resolve($verb);
 
-        if ($settings->getContentType()) {
-
-            $isAllowed = $this->checkPermissions($settings);
-            if (!$isAllowed) {
-                return '403';
-            }
-
-            $matcher = $this->getMatcher($settings);
-            $order = $this->getOrder($settings);
-            if ($settings->getManyOrOne() === Settings::MANY) {
-                $objects = ContentRepositoryFactory::getInstance($settings->getContentType())->findBy($matcher, $order, $settings->getLimit());
-            } else {
-                if ($settings->getContentIdentifier() === 0) {
-                    $message = sprintf('I could find a valid identifier "%s"', $settings->getContentIdentifier());
-                    throw new \RuntimeException($message, 1472294542);
-                }
-                $matcher->equals('uid', $settings->getContentIdentifier());
-                $objects = ContentRepositoryFactory::getInstance($settings->getContentType())->findOneBy($matcher);
-            }
-
-            // Early return
-            if (!$objects) {
-                return '404';
-            }
-
-            // Assign template variables.
-            $this->view->assign('settings', $settings);
-            $this->view->assign('objects', $objects);
-            $this->view->assign('response', $this->controllerContext->getResponse());
-        } else {
-            $message = sprintf('I could find a valid content type for segment "%s"', $settings->getFistRouteSegment());
-            throw new \RuntimeException($message, 1472294541);
+        $isAllowed = $this->checkPermissions($settings);
+        if (!$isAllowed) {
+            return '403';
         }
+
+        $matcher = $this->getMatcher($settings);
+        $matcher = $this->applyCriteriaFromAdditionalConstraints($matcher, $settings->getFilters());
+        $order = $this->getOrder($settings);
+        $objects = ContentRepositoryFactory::getInstance($settings->getContentType())->findBy($matcher, $order, $settings->getLimit());
+
+        // Early return
+        if (!$objects) {
+            return '404';
+        }
+
+        // Assign template variables.
+        $this->view->assign('settings', $settings);
+        $this->view->assign('objects', $objects);
+        $this->view->assign('response', $this->controllerContext->getResponse());
 
         $fileNameAndPath = 'EXT:oai_server/Resources/Private/Templates/OaiServer/Output.' . $settings->getFormat();
         $templatePathAndFilename = GeneralUtility::getFileAbsFileName($fileNameAndPath);
         $this->view->setTemplatePathAndFilename($templatePathAndFilename);
 
         return $this->view->render();
+    }
+
+    /**
+     * @param Matcher $matcher
+     * @param array $constraints
+     * @return Matcher $matcher
+     */
+    protected function applyCriteriaFromAdditionalConstraints(Matcher $matcher, array $constraints)
+    {
+
+        foreach ($constraints as $constraint) {
+
+            // hidden feature, constraint should not starts with # which considered a commented statement
+            if (false === strpos($constraint, '#')) {
+
+                if (preg_match('/(.+) (>=|>|<|<=|=|like) (.+)/is', $constraint, $matches) && count($matches) === 4) {
+
+                    $operator = $matcher->getSupportedOperators()[strtolower(trim($matches[2]))];
+                    $operand = trim($matches[1]);
+                    $value = trim($matches[3]);
+
+                    $matcher->$operator($operand, $value);
+                } elseif (preg_match('/(.+) (in) (.+)/is', $constraint, $matches) && count($matches) === 4) {
+
+                    $operator = $matcher->getSupportedOperators()[strtolower(trim($matches[2]))];
+                    $operand = trim($matches[1]);
+                    $value = trim($matches[3]);
+                    $matcher->$operator($operand, GeneralUtility::trimExplode(',', $value, true));
+                }
+            }
+        }
+        return $matcher;
     }
 
     /**

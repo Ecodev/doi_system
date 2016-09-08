@@ -17,14 +17,24 @@ plugin.tx_oaiserver {
         # Tell the maximum items taken by default for the list.
         limit = 50
 
-        # Optional default filters (not yet implemented)
-        filter =
+        # Optional default filters
+        filters {
+            # Possible operators = , >, >= , < , <=, like, in
+            0 = storage = 1
+            1 = metadata.categories = 310
+        }
+
+        defaults {
+            publisher = sozialpolitik.ch
+            doiPrefix = 10.18753
+            doiSuffix = 2297-8224-
+        }
 
         # Protect the output with a token or a user session
         permissions {
 
             # Possible comma separated list of Frontend User group.
-            frontendUserGroups = *
+            #frontendUserGroups = *
 
             # Give a general uuid token to protect this data stream
             #token = 3ce2b796-69cd-11e6-8b77-86f30ca893d3
