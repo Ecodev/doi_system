@@ -5,33 +5,33 @@ if (!defined('TYPO3_MODE')) {
 
 //# No cachable plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Fab.oai_server',
+    'Fab.doi_system',
     'Pi1',
     array(
-        'OaiServer' => 'output',
+        'DoiSystem' => 'output',
     ),
     // non-cacheable actions
     array(
-        'OaiServer' => 'output',
+        'DoiSystem' => 'output',
     )
 );
 
 // Define whether to automatically load TS.
-$configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['oai_server']);
+$configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['doi_system']);
 if (false === isset($configuration['autoload_typoscript']) || true === (bool)$configuration['autoload_typoscript']) {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript(
-        'oai_server',
+        'doi_system',
         'constants',
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:oai_server/Configuration/TypoScript/constants.txt">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:doi_system/Configuration/TypoScript/constants.txt">'
     );
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript(
-        'oai_server',
+        'doi_system',
         'setup',
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:oai_server/Configuration/TypoScript/setup.txt">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:doi_system/Configuration/TypoScript/setup.txt">'
     );
 }
 
 // Register routing service
-$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['oai_server'] = 'EXT:oai_server/Classes/Controller/RoutingController.php';
+$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doi_system'] = 'EXT:doi_system/Classes/Controller/RoutingController.php';

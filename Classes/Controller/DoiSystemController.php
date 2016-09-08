@@ -1,8 +1,8 @@
 <?php
-namespace Fab\OaiServer\Controller;
+namespace Fab\DoiSystem\Controller;
 
 /*
- * This file is part of the Fab/OaiServer project under GPLv2 or later.
+ * This file is part of the Fab/DoiSystem project under GPLv2 or later.
  *
  * For the full copyright and license information, please read the
  * LICENSE.md file that was distributed with this source code.
@@ -11,17 +11,17 @@ namespace Fab\OaiServer\Controller;
 use Fab\Vidi\Domain\Repository\ContentRepositoryFactory;
 use Fab\Vidi\Persistence\Order;
 use Fab\Vidi\Tca\Tca;
-use Fab\OaiServer\Resolver\Settings;
-use Fab\OaiServer\Resolver\SettingsResolver;
+use Fab\DoiSystem\Resolver\Settings;
+use Fab\DoiSystem\Resolver\SettingsResolver;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Fab\Vidi\Persistence\Matcher;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
- * Class OaiServerController
+ * Class DoiSystemController
  */
-class OaiServerController extends ActionController
+class DoiSystemController extends ActionController
 {
 
     /**
@@ -53,7 +53,7 @@ class OaiServerController extends ActionController
         $this->view->assign('objects', $objects);
         $this->view->assign('response', $this->controllerContext->getResponse());
 
-        $fileNameAndPath = 'EXT:oai_server/Resources/Private/Templates/OaiServer/Output.' . $settings->getFormat();
+        $fileNameAndPath = 'EXT:doi_system/Resources/Private/Templates/DoiSystem/Output.' . $settings->getFormat();
         $templatePathAndFilename = GeneralUtility::getFileAbsFileName($fileNameAndPath);
         $this->view->setTemplatePathAndFilename($templatePathAndFilename);
 

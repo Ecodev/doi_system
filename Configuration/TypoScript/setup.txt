@@ -1,17 +1,17 @@
 # Plugin configuration
-plugin.tx_oaiserver {
+plugin.tx_doisystem {
     persistence {
-        storagePid = {$plugin.tx_oaiserver.persistence.storagePid}
+        storagePid = {$plugin.tx_doisystem.persistence.storagePid}
     }
 
     view {
-        templateRootPath = {$plugin.tx_oaiserver.view.templateRootPath}
-        partialRootPath = {$plugin.tx_oaiserver.view.partialRootPath}
-        layoutRootPath = {$plugin.tx_oaiserver.view.layoutRootPath}
+        templateRootPath = {$plugin.tx_doisystem.view.templateRootPath}
+        partialRootPath = {$plugin.tx_doisystem.view.partialRootPath}
+        layoutRootPath = {$plugin.tx_doisystem.view.layoutRootPath}
     }
 }
 
-plugin.tx_oaiserver {
+plugin.tx_doisystem {
     settings {
 
         # Tell the maximum items taken by default for the list.

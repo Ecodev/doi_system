@@ -1,8 +1,8 @@
 <?php
-namespace Fab\OaiServer\Controller;
+namespace Fab\DoiSystem\Controller;
 
 /*
- * This file is part of the Fab/OaiServer project under GPLv2 or later.
+ * This file is part of the Fab/DoiSystem project under GPLv2 or later.
  *
  * For the full copyright and license information, please read the
  * LICENSE.md file that was distributed with this source code.
@@ -26,7 +26,7 @@ class RoutingController
     public function __construct($verb)
     {
         // Tweak, inject parameters
-        $_GET['tx_oaiserver_pi1']['verb'] = $verb;
+        $_GET['tx_doisystem_pi1']['verb'] = $verb;
     }
 
     /**
@@ -45,7 +45,7 @@ class RoutingController
 
         $configuration = [
             'pluginName' => 'Pi1',
-            'extensionName' => 'OaiServer',
+            'extensionName' => 'DoiSystem',
             'vendorName' => 'Fab',
         ];
 
@@ -119,7 +119,7 @@ if ($verb) {
 <h1>500 Internal Server Error</h1>
 <p>Error {$e->getCode()}: {$e->getMessage()}</p>
 <hr>
-<address>OAI server at {$_SERVER['SERVER_NAME']}</address>
+<address>DOI System at {$_SERVER['SERVER_NAME']}</address>
 </body></html>
 HTML;
         exit();
@@ -136,7 +136,7 @@ if ($output === '403') {
 <h1>403 Forbidden</h1>
 <p>You do not have access to this resource {$_SERVER['REQUEST_URI']}.</p>
 <hr>
-<address>OAI server at {$_SERVER['SERVER_NAME']}</address>
+<address>DOI System at {$_SERVER['SERVER_NAME']}</address>
 </body></html>
 HTML;
     exit();
@@ -150,7 +150,7 @@ HTML;
 <h1>Not Found</h1>
 <p>No resource {$_SERVER['REQUEST_URI']} to display on this server.</p>
 <hr>
-<address>OAI server at {$_SERVER['SERVER_NAME']}</address>
+<address>DOI System at {$_SERVER['SERVER_NAME']}</address>
 </body></html>
 HTML;
     exit();

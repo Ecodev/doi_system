@@ -1,15 +1,15 @@
 
-plugin.tx_oaiserver {
+plugin.tx_doisystem {
 	view {
-		# cat=plugin.tx_oaiserver/file; type=string; label=Path to template root (BE)
-		templateRootPath = EXT:oai_server/Resources/Private/Templates/
-		# cat=plugin.tx_oaiserver/file; type=string; label=Path to template partials (BE)
-		partialRootPath = EXT:oai_server/Resources/Private/Partials/
-		# cat=plugin.tx_oaiserver/file; type=string; label=Path to template layouts (BE)
-		layoutRootPath = EXT:oai_server/Resources/Private/Layouts/
+		# cat=plugin.tx_doisystem/file; type=string; label=Path to template root (BE)
+		templateRootPath = EXT:doi_system/Resources/Private/Templates/
+		# cat=plugin.tx_doisystem/file; type=string; label=Path to template partials (BE)
+		partialRootPath = EXT:doi_system/Resources/Private/Partials/
+		# cat=plugin.tx_doisystem/file; type=string; label=Path to template layouts (BE)
+		layoutRootPath = EXT:doi_system/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.tx_oaiserver//a; type=string; label=Default storage PID
+		# cat=plugin.tx_doisystem//a; type=string; label=Default storage PID
 		storagePid =
 	}
 }
