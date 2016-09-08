@@ -21,7 +21,8 @@ plugin.tx_doisystem {
         filters {
             # Possible operators = , >, >= , < , <=, like, in
             0 = storage = 1
-            1 = metadata.categories = 310
+            1 = metadata.categories >= 310
+            2 = metadata.categories <= 320
         }
 
         defaults {
