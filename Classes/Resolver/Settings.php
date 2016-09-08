@@ -19,22 +19,14 @@ class Settings
     /**
      * @var string
      */
+    protected $allowedVerbs = [
+        self::LIST_RECORDS
+    ];
+
+    /**
+     * @var string
+     */
     protected $contentType = 'sys_file';
-
-    /**
-     * @var int
-     */
-    protected $contentIdentifier = 0;
-
-    /**
-     * @var array
-     */
-    protected $fields = [];
-
-    /**
-     * @var array
-     */
-    protected $excludedFields = [];
 
     /**
      * @var array
@@ -42,19 +34,9 @@ class Settings
     protected $orderings = [];
 
     /**
-     * @var array
-     */
-    protected $routeSegments = [];
-
-    /**
      * @var int
      */
     protected $limit = 10;
-
-    /**
-     * @var string
-     */
-    protected $format = 'atom';
 
     /**
      * @var array
@@ -65,6 +47,11 @@ class Settings
      * @var string
      */
     protected $permissionToken = '';
+
+    /**
+     * @var string
+     */
+    protected $verb = '';
 
     /**
      * @var array
@@ -90,50 +77,6 @@ class Settings
     }
 
     /**
-     * @return int
-     */
-    public function getContentIdentifier()
-    {
-        return (int)$this->routeSegments[1];
-    }
-
-    /**
-     * @return array
-     */
-    public function getFields()
-    {
-        return $this->fields;
-    }
-
-    /**
-     * @param array $fields
-     * @return $this
-     */
-    public function setFields(array $fields)
-    {
-        $this->fields = $fields;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getExcludedFields()
-    {
-        return $this->excludedFields;
-    }
-
-    /**
-     * @param array $excludedFields
-     * @return $this
-     */
-    public function setExcludedFields(array $excludedFields)
-    {
-        $this->excludedFields = $excludedFields;
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getOrderings()
@@ -149,40 +92,6 @@ class Settings
     {
         $this->orderings = $orderings;
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRouteSegments()
-    {
-        return $this->routeSegments;
-    }
-
-    /**
-     * @param array $routeSegments
-     * @return $this
-     */
-    public function setRouteSegments(array $routeSegments)
-    {
-        $this->routeSegments = $routeSegments;
-
-        $routeSize = count($this->routeSegments);
-
-        // Detect the format
-        if (preg_match('/([\w]+)\.(atom|csv|html|json|xml)/', $this->routeSegments[$routeSize - 1], $matches)) {
-            $this->format = $matches[2];
-            $this->routeSegments[$routeSize - 1] = $matches[1];
-        }
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function countRouteSegments()
-    {
-        return count($this->routeSegments);
     }
 
     /**
@@ -202,41 +111,6 @@ class Settings
         $this->limit = $limit;
         return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * @param string $format
-     * @return $this
-     */
-    public function setFormat($format)
-    {
-        $this->format = $format;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastRouteSegment()
-    {
-        $routeSegments = $this->routeSegments;
-        return array_pop($routeSegments);
-    }
-
-//    /**
-//     * @return string
-//     */
-//    public function getFistRouteSegment()
-//    {
-//        return $this->routeSegments[0];
-//    }
 
     /**
      * @return array
@@ -307,5 +181,26 @@ class Settings
         return (string)$argumentValue;
     }
 
+    /**
+     * @return string
+     */
+    public function getVerb()
+    {
+        return $this->verb;
+    }
+
+    /**
+     * @param string $verb
+     * @return $this
+     */
+    public function setVerb($verb)
+    {
+        if (in_array($verb, $this->allowedVerbs, true)) {
+            $this->verb = $verb;
+        } else {
+            throw new \RuntimeException('Verb "' . $verb . '" not allowed.', 1473335079);
+        }
+        return $this;
+    }
 
 }

@@ -99,7 +99,7 @@ class RoutingController
 
 }
 
-$output = '404'; // @todo 500
+$output = '404';
 $verb = GeneralUtility::_GET('verb');
 
 if ($verb) {
@@ -124,6 +124,20 @@ if ($verb) {
 HTML;
         exit();
     }
+} else {
+    header('HTTP/1.1 500 Internal Server Error');
+    print <<<HTML
+<!DOCTYPE html>
+<html><head>
+<title>500 Internal Server Error</title>
+</head><body>
+<h1>500 Internal Server Error</h1>
+<p>Missing verb in URL e.g. verb=ListRecords</p>
+<hr>
+<address>DOI System at {$_SERVER['SERVER_NAME']}</address>
+</body></html>
+HTML;
+    exit();
 }
 
 if ($output === '403') {

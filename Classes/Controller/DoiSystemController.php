@@ -41,21 +41,24 @@ class DoiSystemController extends ActionController
         $matcher = $this->getMatcher($settings);
         $matcher = $this->applyCriteriaFromAdditionalConstraints($matcher, $settings->getFilters());
         $order = $this->getOrder($settings);
-        $objects = ContentRepositoryFactory::getInstance($settings->getContentType())->findBy($matcher, $order, $settings->getLimit());
+        $files = ContentRepositoryFactory::getInstance($settings->getContentType())->findBy($matcher, $order, $settings->getLimit());
 
         // Early return
-        if (!$objects) {
+        if (!$files) {
             return '404';
         }
 
         // Assign template variables.
         $this->view->assign('settings', $settings);
-        $this->view->assign('objects', $objects);
-        $this->view->assign('response', $this->controllerContext->getResponse());
+        $this->view->assign('files', $files);
 
-        $fileNameAndPath = 'EXT:doi_system/Resources/Private/Templates/DoiSystem/Output.' . $settings->getFormat();
+        $fileNameAndPath = 'EXT:doi_system/Resources/Private/Templates/DoiSystem/Output.xml';
         $templatePathAndFilename = GeneralUtility::getFileAbsFileName($fileNameAndPath);
         $this->view->setTemplatePathAndFilename($templatePathAndFilename);
+
+        // Send proper header
+        $this->controllerContext->getResponse()->setHeader('Content-Type', 'application/rss+xml');
+        $this->controllerContext->getResponse()->sendHeaders();
 
         return $this->view->render();
     }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+         http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+
+	<responseDate><f:format.date format="c">today</f:format.date></responseDate>
+	<doi:tag.request/>
+
+	<ListRecords>
+		<f:for each="{files}" as="file">
+			<record>
+				<header>
+					<identifier>10.18753/2297-8224-{file.uid}</identifier>
+					<datestamp>[sys_file_metadata:tsstamp] in YYYY-MM-DD format</datestamp>
+				</header>
+				<metadata>
+					<oai_dc:dc
+							xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+							xmlns:dc="http://purl.org/dc/elements/1.1/"
+							xmlns:dcterms="http://purl.org/dc/dc/terms/"
+							xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+							xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+				http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+
+
+						<f:comment><!-- mandatory tags --></f:comment>
+						<dc:identifier>10.18753/2297-8224-[sys_file_metadata:year]-[sys_file_metadata:uid]
+						</dc:identifier>
+						<dc:identifier>http://www.sozialpolitik.ch/article/content/480/show/[sys_file_metadata:uid]/
+						</dc:identifier>
+						[for each [sys_file_metadata:creator]] (use ; as separator for loop)
+						<dc:creator>Lastname1, Firstname1</dc:creator>
+						<dc:creator>Lastname2, Firstname2</dc:creator>
+						[end for]
+						<dc:title>[sys_file_metadata:title]</dc:title>
+						<dc:publisher>sozialpolitik.ch</dc:publisher>
+						<dc:date>[sys_file_metadata:year]</dc:date>
+						<dc:type>Text</dc:type>
+						<dc:type>Article</dc:type>
+
+						<f:comment><!-- recommended tags --></f:comment>
+						<dc:subject>[sys_file_metadata:keywords]</dc:subject>
+						<dc:contributor>sozialpolitik.ch</dc:contributor>
+
+						<f:comment><!-- optional tags --></f:comment>
+						<dc:language>[sys_file_metadata:language]</dc:language>
+						<dc:format>PDF</dc:format>
+
+						<f:comment><!-- recommended tag but define rights (optional) for use of description --></f:comment>
+						<dc:rights>xxx</dc:rights>
+						<dc:description>[sys_file_metadata:description]</dc:description>
+
+					</oai_dc:dc>
+				</metadata>
+			</record>
+
+		</f:for>
+	</ListRecords>
+</OAI-PMH>
+{namespace doi=Fab\DoiSystem\ViewHelpers}
