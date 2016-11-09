@@ -31,7 +31,8 @@ plugin.tx_doisystem {
             urlIdentifier = http://www.sozialpolitik.ch/article/content/480/show/
             publisher = sozialpolitik.ch
             contributor = sozialpolitik.ch
-            copyright =
+            copyrightText = Creative Commons Attribution-ShareAlike 4.0 International
+            copyrightUrl = http://creativecommons.org/licenses/by-sa/4.0/
         }
 
         # Protect the output with a token or a user session
