@@ -12,7 +12,7 @@
 			<record>
 				<header>
 					<identifier>10.18753/2297-8224-{file.uid}</identifier>
-					<datestamp><f:format.date format="Y-m-d">{file.metadata.tstamp}</f:format.date></datestamp>
+					<datestamp><f:format.date format="Y-m-d\TH:i:s\Z">{file.metadata.tstamp}</f:format.date></datestamp>
 				</header>
 				<metadata>
 					<oai_dc:dc
@@ -42,7 +42,8 @@
 						<dc:format>PDF</dc:format>
 
 						<f:comment><!-- recommended tag but define rights (optional) for use of description --></f:comment>
-						<dc:rights>{defaults.copyright}</dc:rights>
+						<dc:rights>{defaults.copyrightText}</dc:rights>
+						<dc:rights>{defaults.copyrightUrl}</dc:rights>
 						<dc:description>{file.metadata.description}</dc:description>
 
 					</oai_dc:dc>
