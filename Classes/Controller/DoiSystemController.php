@@ -43,19 +43,22 @@ class DoiSystemController extends ActionController
         $order = $this->getOrder($settings);
         $files = ContentRepositoryFactory::getInstance($settings->getContentType())->findBy($matcher, $order, $settings->getLimit());
 
-        // Early return
-        if (!$files) {
-            return '404';
-        }
-
         // Assign template variables.
         $this->view->assign('settings', $settings);
         $this->view->assign('defaults', $this->settings['defaults']);
         $this->view->assign('files', $files);
 
-        $fileNameAndPath = 'EXT:doi_system/Resources/Private/Templates/DoiSystem/Output.xml';
-        $templatePathAndFilename = GeneralUtility::getFileAbsFileName($fileNameAndPath);
-        $this->view->setTemplatePathAndFilename($templatePathAndFilename);
+        // Early return
+        if (!$files) {
+            // return '404';
+            $fileNameAndPath = 'EXT:doi_system/Resources/Private/Templates/DoiSystem/NoRecords.xml';
+            $templatePathAndFilename = GeneralUtility::getFileAbsFileName($fileNameAndPath);
+            $this->view->setTemplatePathAndFilename($templatePathAndFilename);
+        } else {
+            $fileNameAndPath = 'EXT:doi_system/Resources/Private/Templates/DoiSystem/Output.xml';
+            $templatePathAndFilename = GeneralUtility::getFileAbsFileName($fileNameAndPath);
+            $this->view->setTemplatePathAndFilename($templatePathAndFilename);
+        }
 
         // Send proper header
         $this->controllerContext->getResponse()->setHeader('Content-Type', 'application/xml');
