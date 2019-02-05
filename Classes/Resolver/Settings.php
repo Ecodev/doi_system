@@ -156,6 +156,8 @@ class Settings
         $fromDate = $this->getArgument('from');
         if ($fromDate) {
             $fromTimeStamp = strtotime($fromDate);
+            // add to correct manually the time zone
+            $fromTimeStamp = $fromTimeStamp - 3600;
             $this->filters[] = 'metadata.tstamp > ' . $fromTimeStamp;
         }
         return $this->filters;
