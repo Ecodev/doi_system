@@ -34,4 +34,4 @@ if (false === isset($configuration['autoload_typoscript']) || true === (bool)$co
 }
 
 // Register routing service
-$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doi_system'] = 'EXT:doi_system/Classes/Controller/RoutingController.php';
+$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['doi_system'] = \Fab\DoiSystem\Controller\RoutingController::class . '::dispatch';

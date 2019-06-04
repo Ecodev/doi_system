@@ -25,12 +25,11 @@ class DoiSystemController extends ActionController
 {
 
     /**
-     * @param string $verb
      * @return string
      */
-    public function outputAction($verb)
+    public function outputAction()
     {
-
+        $verb = (string)GeneralUtility::_GP('verb');
         $settings = $this->getSettingsResolver()->resolve($verb);
 
         $isAllowed = $this->checkPermissions($settings);

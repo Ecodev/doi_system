@@ -8,6 +8,8 @@ namespace Fab\DoiSystem\Controller;
  * LICENSE.md file that was distributed with this source code.
  */
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Core\Bootstrap;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
@@ -21,23 +23,14 @@ class RoutingController
 {
 
     /**
-     * @param string $verb
-     */
-    public function __construct($verb)
-    {
-        // Tweak, inject parameters
-        $_GET['tx_doisystem_pi1']['verb'] = $verb;
-    }
-
-    /**
-     * Dispatches the request and returns data.
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      *
      * @return string
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      */
-    public function dispatch()
+    public function dispatch(ServerRequestInterface $request, ResponseInterface $response)
     {
+        $verb = GeneralUtility::_GP('verb');
         $this->initializeFrontend();
 
         /** @var Bootstrap $bootstrap */
@@ -49,9 +42,15 @@ class RoutingController
             'vendorName' => 'Fab',
         ];
 
-        return $bootstrap->run('', $configuration);
+        $result = $bootstrap->run('', $configuration);
+        if ($result === '403') {
+            $response->getBody()->write('403 Forbidden');
+            $response->withStatus('403', '403 Forbidden');
+        } else {
+            $response->getBody()->write($result);
+        }
+        return $response;
     }
-
 
     /**
      * Initializes TSFE and $GLOBALS['TSFE'].
@@ -89,85 +88,11 @@ class RoutingController
     }
 
     /**
-     * @return ObjectManager
-     * @throws \InvalidArgumentException
+     * @return ObjectManager|object
      */
     protected function getObjectManager()
     {
         return GeneralUtility::makeInstance(ObjectManager::class);
     }
 
-}
-
-$output = '404';
-$verb = GeneralUtility::_GET('verb');
-
-if ($verb) {
-
-    /** @var RoutingController $routing */
-    $routing = GeneralUtility::makeInstance(RoutingController::class, $verb);
-
-    try {
-        $output = $routing->dispatch();
-    } catch (\Exception $e) {
-        header('HTTP/1.1 500 Internal Server Error');
-        print <<<HTML
-<!DOCTYPE html>
-<html><head>
-<title>500 Internal Server Error</title>
-</head><body>
-<h1>500 Internal Server Error</h1>
-<p>Error {$e->getCode()}: {$e->getMessage()}</p>
-<hr>
-<address>DOI System at {$_SERVER['SERVER_NAME']}</address>
-</body></html>
-HTML;
-        exit();
-    }
-} else {
-    header('HTTP/1.1 500 Internal Server Error');
-    print <<<HTML
-<!DOCTYPE html>
-<html><head>
-<title>500 Internal Server Error</title>
-</head><body>
-<h1>500 Internal Server Error</h1>
-<p>Missing verb in URL e.g. verb=ListRecords</p>
-<hr>
-<address>DOI System at {$_SERVER['SERVER_NAME']}</address>
-</body></html>
-HTML;
-    exit();
-}
-
-if ($output === '403') {
-    header('403 Not Found');
-    print <<<HTML
-<!DOCTYPE html>
-<html><head>
-<title>403 Forbidden</title>
-</head><body>
-<h1>403 Forbidden</h1>
-<p>You do not have access to this resource {$_SERVER['REQUEST_URI']}.</p>
-<hr>
-<address>DOI System at {$_SERVER['SERVER_NAME']}</address>
-</body></html>
-HTML;
-    exit();
-} elseif ($output === '404') {
-    header('404 Not Found');
-    print <<<HTML
-<!DOCTYPE html>
-<html><head>
-<title>404 Not Found</title>
-</head><body>
-<h1>Not Found</h1>
-<p>No resource {$_SERVER['REQUEST_URI']} to display on this server.</p>
-<hr>
-<address>DOI System at {$_SERVER['SERVER_NAME']}</address>
-</body></html>
-HTML;
-    exit();
-} else {
-    print $output;
 }
