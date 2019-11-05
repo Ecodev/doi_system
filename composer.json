@@ -3,7 +3,7 @@
 	"type": "typo3-cms-extension",
 	"description": "DOI System - OAI server emulation. OAI stands for Open Archives Initiative, a protocol for Metadata Harvesting.",
 	"homepage": "https://github.com/Ecodev/doi_system",
-	"license": ["GPL-2.0+"],
+	"license": ["GPL-2.0-or-later"],
 	"keywords": ["TYPO3 CMS", "DOI system", "OAI server"],
 	"support": {
 		"issues": "https://github.com/Ecodev/doi_system/issues"
@@ -14,7 +14,7 @@
 		}
 	},
 	"replace": {
-		"doi_system": "self.version",
+		"fab/doi_system": "self.version",
 		"typo3-ter/doi-system": "self.version"
 	}
 }
