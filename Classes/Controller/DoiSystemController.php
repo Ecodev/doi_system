@@ -135,9 +135,6 @@ class DoiSystemController extends ActionController
     /**
      * @param Settings $settings
      * @return Matcher
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \InvalidArgumentException
      */
     protected function getMatcher(Settings $settings)
     {
@@ -179,10 +176,7 @@ class DoiSystemController extends ActionController
     /**
      * Signal that is called for post processing matcher
      *
-     * @signal
      * @param Matcher $matcher
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
     protected function emitPostProcessMatcherSignal(Matcher $matcher)
     {
