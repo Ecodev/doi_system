@@ -17,7 +17,7 @@ class Settings
     const LIST_RECORDS = 'ListRecords';
 
     /**
-     * @var string
+     * @var array
      */
     protected $allowedVerbs = [
         self::LIST_RECORDS
@@ -199,8 +199,6 @@ class Settings
     {
         if (in_array($verb, $this->allowedVerbs, true)) {
             $this->verb = $verb;
-        } else {
-            throw new \RuntimeException('Verb "' . $verb . '" not allowed.', 1473335079);
         }
         return $this;
     }
