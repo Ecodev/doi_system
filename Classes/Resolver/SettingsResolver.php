@@ -56,6 +56,9 @@ class SettingsResolver
             }
         }
 
+        if (array_key_exists('limit', $this->tsSettings)) {
+            $settings->setLimit((int)$this->tsSettings['limit']);
+        }
         return $settings;
     }
 

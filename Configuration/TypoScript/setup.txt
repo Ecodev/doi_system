@@ -15,7 +15,7 @@ plugin.tx_doisystem {
     settings {
 
         # Tell the maximum items taken by default for the list.
-        limit = 50
+        limit = 0
 
         # Optional default filters
         filters {
