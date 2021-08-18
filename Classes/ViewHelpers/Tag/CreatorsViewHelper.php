@@ -10,7 +10,7 @@ namespace Fab\DoiSystem\ViewHelpers\Tag;
 
 use Fab\DoiSystem\Resolver\Settings;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Class CreatorsViewHelper
