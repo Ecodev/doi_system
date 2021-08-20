@@ -5,7 +5,7 @@
          http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
 
 	<responseDate><f:format.date format="c">today</f:format.date></responseDate>
-	<doi:tag.request/>
+	<f:format.raw><doi:tag.request/></f:format.raw>
 
 	<ListRecords>
 		<f:for each="{files}" as="file">
@@ -26,7 +26,7 @@
 						<f:comment><!-- mandatory tags --></f:comment>
 						<dc:identifier>{defaults.doiPrefix}/{defaults.doiSuffix}-{file.uid}</dc:identifier>
 						<dc:identifier>{defaults.urlIdentifier}{file.uid}/</dc:identifier>
-						<doi:tag.creators/>
+						<f:format.raw><doi:tag.creators/></f:format.raw>
 						<dc:title>{file.metadata.title}</dc:title>
 						<dc:publisher>{defaults.publisher}</dc:publisher>
 						<dc:date>{file.metadata.year}</dc:date>
