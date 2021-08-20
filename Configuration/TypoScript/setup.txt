@@ -46,3 +46,31 @@ plugin.tx_doisystem {
         }
     }
 }
+
+###################
+# Ajax
+###################
+page_1629472716 = PAGE
+page_1629472716 {
+    typeNum = 1629472716
+    config {
+        xhtml_cleaning = 0
+        admPanel = 0
+        disableAllHeaderCode = 1
+        disablePrefixComment = 1
+        debug = 0
+        additionalHeaders.10.header = Content-type:application/xml
+    }
+    10 = USER_INT
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = DoiSystem
+        pluginName = Pi1
+        vendorName = Fab
+        switchableControllerActions {
+            DoiSystem {
+                1 = output
+            }
+        }
+    }
+}
