@@ -24,9 +24,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 class DoiSystemController extends ActionController
 {
 
-    /**
-     * @return string
-     */
     public function outputAction()
     {
         $verb = (string)GeneralUtility::_GP('verb');
@@ -150,9 +147,7 @@ class DoiSystemController extends ActionController
 
     /**
      * @param Settings $settings
-     * @return Order
-     * @throws \Fab\Vidi\Exception\NotExistingClassException
-     * @throws \InvalidArgumentException
+     * @return object|Order
      */
     protected function getOrder(Settings $settings)
     {
@@ -165,8 +160,7 @@ class DoiSystemController extends ActionController
     }
 
     /**
-     * @return SettingsResolver
-     * @throws \InvalidArgumentException
+     * @return object|SettingsResolver
      */
     protected function getSettingsResolver()
     {
@@ -186,7 +180,7 @@ class DoiSystemController extends ActionController
     /**
      * Get the SignalSlot dispatcher
      *
-     * @return \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @return object|\TYPO3\CMS\Extbase\SignalSlot\Dispatcher
      */
     protected function getSignalSlotDispatcher()
     {
