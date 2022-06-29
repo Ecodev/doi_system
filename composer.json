@@ -20,5 +20,8 @@
 		"typo3/cms": {
 			"extension-key": "doi_system"
 		}
+	},
+	"require": {
+		"typo3/cms-core": "^11.5"
 	}
 }
