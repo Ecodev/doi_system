@@ -1,4 +1,7 @@
 <?php
+
+use Fab\DoiSystem\Controller\DoiSystemController;
+
 if (!defined('TYPO3_MODE')) {
     die ('Access denied.');
 }
@@ -8,11 +11,11 @@ if (!defined('TYPO3_MODE')) {
     'Fab.doi_system',
     'Pi1',
     array(
-        'DoiSystem' => 'output',
+        DoiSystemController::class => 'output',
     ),
     // non-cacheable actions
     array(
-        'DoiSystem' => 'output',
+        DoiSystemController::class => 'output',
     )
 );
 
